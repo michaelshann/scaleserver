@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Serial PHP</title>
+</head>
+<body>
+
+<div style="text-align:center;">
+
+<?php
+
+ini_set("display_errors", "1");
+error_reporting(E_ALL);
+
+echo "Started<br/>";
+
+include "php_serial.class.php";
+
+$serial = new phpSerial; 
+
+$serial->deviceSet("/dev/ttyAMA0"); 
+$serial->confBaudRate(9600); 
+
+$serial->deviceOpen(); 
+
+echo "Opened<br/>";
+
+stream_set_timeout($serial->_dHandle, 10);
+
+$read = $serial->readPort(10); 
+
+echo strlen($read);
+echo $read; 
+
+echo "<br />";
+
+$serial->deviceClose(); 
+
+echo "done";
+?> 
+		</div>
+	</body>
+</html>
