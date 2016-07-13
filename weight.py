@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import serial
+import time
 
 def is_number(s):
     try:
@@ -18,8 +19,11 @@ ser = serial.Serial(
    timeout=1
 )
 
-while True:
-	weight = ser.readline().strip()
+timeout_start = time.time()
+timeout = 5   # [seconds]
+
+while time.time() < timeout_start + timeout:
+    weight = ser.readline().strip()
 	if is_number(weight):
-    		print "%i" % (int(weight))
+        print "%i" % (int(weight))
 		break
